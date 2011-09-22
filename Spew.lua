@@ -119,6 +119,7 @@ end
 
 
 SLASH_SPEW1 = "/spew"
+SLASH_SPEW2 = "/sp"
 function SlashCmdList.SPEW(text)
 	input = text:trim():match("^(.-);*$")
 	if input == "" then ShowUIPanel(panel)
@@ -133,6 +134,10 @@ function SlashCmdList.SPEW(text)
 			f = EnumerateFrames(f)
 		end
 		Spew("Visible frames under mouse", t)
+	elseif input == "frame" then
+		Spew("Frame under mouse", GetMouseFocus():GetName() or "<Anon>")
+	elseif input == "parent" then
+		Spew("Parent of the frame under mouse", GetMouseFocus():GetParent() and GetMouseFocus():GetParent():GetName() or "<Anon>")
 	else
 		local f, err = loadstring(string.format("Spew(%q, %s)", input, input))
 		if f then f() else Print("|cffff0000Error:|r "..err) end
